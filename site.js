@@ -59,4 +59,30 @@
     } catch { msg.textContent = 'Správu sa nepodarilo odoslať. Skúste to prosím znova o chvíľu.'; msg.className = 'form-msg err'; }
     btn.disabled = false; btn.textContent = old;
   }));
+
+  // "Pre koho" tabs
+  const audPanel = $('#audPanel');
+  if (audPanel) {
+    const ICON = { user: '<path d="M12 12a5 5 0 100-10 5 5 0 000 10zM3 22a9 9 0 0118 0"/>', firm: '<path d="M3 21V7l9-4 9 4v14M9 21v-6h6v6M3 21h18"/>', calc: '<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h2M14 11h2M8 15h2M14 15h2M8 19h8"/>' };
+    const AUD = [
+      ['Živnostník', 'user', 'Faktúry za pár sekúnd a prehľad o daniach počas celého roka, nie až v marci.', ['Faktúra z jednej vety a QR platba', 'Upozornenie na blížiacu sa hranicu DPH', 'Odhad dane a odvodov v Daňovom radare', 'Plán Štart zadarmo navždy']],
+      ['Firma', 'firm', 'Opakované faktúry, automatické upomienky a pripravenosť na povinnú e‑faktúru.', ['Opakované faktúry pre paušály a prenájmy', 'Automatické upomienky v 3 krokoch', 'Export UBL XML pre e‑faktúru 2027', 'Viac firiem a používateľov (pripravujeme)']],
+      ['Účtovnícka firma', 'calc', 'Klienti fakturujú správne a vy dostávate podklady v jednom formáte. Za každého klienta provízia.', ['Provízia 30 až 40 % z platieb klientov', 'Export CSV a UBL XML za obdobie', 'White‑label od 25 klientov', 'Účtovník zadarmo v platených plánoch']],
+    ];
+    const show = (i) => {
+      const a = AUD[i];
+      audPanel.innerHTML = `<div><h3>${a[0]}</h3><p>${a[2]}</p><ul>${a[3].map((x) => `<li>${x}</li>`).join('')}</ul><a href="${i === 2 ? 'partneri.html' : 'app.html#/onboarding'}" class="btn btn-primary" style="margin-top:20px">${i === 2 ? 'Program pre účtovníkov' : 'Začať zadarmo'} →</a></div><div class="aud-art"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${ICON[a[1]]}</svg><b>${a[0]}</b></div>`;
+      $$('.aud-list button').forEach((b, k) => { b.classList.toggle('on', k === i); b.setAttribute('aria-selected', String(k === i)); });
+    };
+    $$('.aud-list button').forEach((b, k) => (b.onclick = () => show(k)));
+    show(0);
+  }
+
+  // "Moduly" dropdown: click support for touch devices
+  $$('.dd > button').forEach((b) => (b.onclick = (e) => {
+    e.stopPropagation();
+    const d = b.parentElement; const open = !d.classList.contains('open');
+    d.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open));
+  }));
+  document.addEventListener('click', () => $$('.dd.open').forEach((d) => d.classList.remove('open')));
 })();

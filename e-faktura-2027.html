@@ -22,11 +22,11 @@
 <body>
 <header class="nav"><div class="wrap"><div class="nav-card">
   <a href="./" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><text x="12" y="17.6" text-anchor="middle" font-size="18" font-weight="800" font-family="Plus Jakarta Sans,Arial,sans-serif" fill="currentColor">e</text></svg></span><span>eFakturko</span></a>
-  <nav class="nav-links" aria-label="Hlavná navigácia"><a href="funkcie.html">Funkcie</a><a href="e-faktura-2027.html" class="on" aria-current="page">e‑Faktúra 2027</a><a href="cennik.html">Cenník</a><a href="partneri.html">Pre účtovníkov</a><a href="kontakt.html">Kontakt</a></nav>
+  <nav class="nav-links" aria-label="Hlavná navigácia"><div class="dd"><button type="button" aria-expanded="false" aria-haspopup="true">Moduly <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu"><div class="col"><h5>Moduly</h5><a href="funkcie.html#ai-faktura">Fakturácia<small>Faktúry, QR platby, e‑faktúra</small></a><a href="funkcie.html#upomienky">Upomienky<small>Automaticky v 3 krokoch</small></a><a href="funkcie.html#opakovane">Opakované faktúry<small>Paušály a predplatné</small></a><a href="funkcie.html#vydavky">Výdavky a doklady<small>Sken bločkov s AI</small></a><a href="funkcie.html#dane">Daňový radar<small>Dane a odvody SZČO</small></a><a href="cennik.html#moduly">Autopark, Sklad, Mzdy<i>pripravujeme</i></a></div><div class="col"><h5>Poradňa a nástroje</h5><a href="e-faktura-2027.html">e‑Faktúra 2027<small>Čo sa mení od roku 2027</small></a><a href="nalezitosti-faktury.html">Náležitosti faktúry<small>Čo musí faktúra obsahovať</small></a><a href="pausalne-vydavky.html">Paušálne výdavky<small>Kedy sa oplatia</small></a><a href="app.html#/demo">Živé demo<small>Vyskúšajte bez registrácie</small></a><a href="funkcie.html">Všetky funkcie →</a></div></div></div><a href="partneri.html">Pre účtovníkov</a><a href="e-faktura-2027.html" class="on" aria-current="page">e‑Faktúra 2027</a><a href="cennik.html">Cenník</a><a href="o-nas.html">O nás</a><a href="kontakt.html">Kontakt</a></nav>
   <div class="nav-cta"><a href="app.html#/login" class="link-login top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>Prihlásenie</a><a href="app.html#/onboarding" class="btn btn-primary">Registrácia</a>
   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="mnav"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button></div>
 </div>
-<nav class="mnav" id="mnav" hidden><a href="funkcie.html">Funkcie</a><a href="e-faktura-2027.html">e‑Faktúra 2027</a><a href="cennik.html">Cenník</a><a href="partneri.html">Pre účtovníkov</a><a href="kontakt.html">Kontakt</a><a href="app.html#/login">Prihlásenie</a></nav>
+<nav class="mnav" id="mnav" hidden><a href="funkcie.html">Moduly a funkcie</a><a href="partneri.html">Pre účtovníkov</a><a href="e-faktura-2027.html">e‑Faktúra 2027</a><a href="cennik.html">Cenník</a><a href="o-nas.html">O nás</a><a href="kontakt.html">Kontakt</a><a href="app.html#/login">Prihlásenie</a></nav>
 </div></header>
 
 <main>
@@ -95,14 +95,16 @@
 </div></section>
 </main>
 
-<footer><div class="wrap">
+<footer class="light"><div class="wrap">
   <div class="foot">
-    <div><a href="./" class="logo" style="color:#fff"><span class="logo-mark" style="background:#fff;color:var(--violet)"><svg viewBox="0 0 24 24"><text x="12" y="17.6" text-anchor="middle" font-size="18" font-weight="800" font-family="Plus Jakarta Sans,Arial,sans-serif" fill="currentColor">e</text></svg></span><span>eFakturko</span></a><p style="margin-top:12px;max-width:300px">Fakturácia s AI pre živnostníkov a firmy na Slovensku.</p></div>
-    <div><h4>Produkt</h4><nav><a href="funkcie.html">Funkcie</a><a href="cennik.html">Cenník</a><a href="e-faktura-2027.html">e‑Faktúra 2027</a><a href="app.html#/demo">Živé demo</a></nav></div>
-    <div><h4>Spoločnosť</h4><nav><a href="partneri.html">Pre účtovníkov</a><a href="kontakt.html">Kontakt</a><a href="app.html#/onboarding">Registrácia</a></nav></div>
-    <div><h4>Právne informácie</h4><nav><a href="obchodne-podmienky.html">Obchodné podmienky</a><a href="ochrana-osobnych-udajov.html">Ochrana osobných údajov</a></nav></div>
+    <div><a href="./" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><text x="12" y="17.6" text-anchor="middle" font-size="18" font-weight="800" font-family="Plus Jakarta Sans,Arial,sans-serif" fill="currentColor">e</text></svg></span><span>eFakturko</span></a><p style="margin-top:14px;max-width:280px;line-height:1.6">Online fakturácia s AI pre živnostníkov a firmy na Slovensku.</p><p style="margin-top:14px"><a href="kontakt.html" style="color:var(--violet);font-weight:600">Napíšte nám →</a></p></div>
+    <div><h4>Stránky</h4><nav><a href="funkcie.html">Funkcie</a><a href="cennik.html">Cenník</a><a href="partneri.html">Pre účtovníkov</a><a href="o-nas.html">O nás</a><a href="kontakt.html">Kontakt</a></nav></div>
+    <div><h4>Moduly</h4><nav><a href="funkcie.html#ai-faktura">Fakturácia</a><a href="funkcie.html#upomienky">Upomienky</a><a href="funkcie.html#vydavky">Výdavky</a><a href="funkcie.html#dane">Daňový radar</a><a href="cennik.html#moduly">Ďalšie moduly</a></nav></div>
+    <div><h4>Poradňa</h4><nav><a href="e-faktura-2027.html">e‑Faktúra 2027</a><a href="nalezitosti-faktury.html">Náležitosti faktúry</a><a href="pausalne-vydavky.html">Paušálne výdavky</a><a href="app.html#/demo">Živé demo</a></nav></div>
+    <div class="docs"><h4>Dokumenty</h4><nav><a href="obchodne-podmienky.html">Obchodné podmienky</a><a href="ochrana-osobnych-udajov.html">Ochrana osobných údajov</a></nav></div>
   </div>
   <div class="foot-b"><span>© <span id="yr"></span> eFakturko</span><span>Všetky ceny sú uvedené bez DPH</span></div>
+  <div class="watermark" aria-hidden="true">eFakturko</div>
 </div></footer>
 <script src="site.js" defer></script>
 </body>

@@ -22,11 +22,11 @@
 <body>
 <header class="nav"><div class="wrap"><div class="nav-card">
   <a href="./" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><text x="12" y="17.6" text-anchor="middle" font-size="18" font-weight="800" font-family="Plus Jakarta Sans,Arial,sans-serif" fill="currentColor">e</text></svg></span><span>eFakturko</span></a>
-  <nav class="nav-links" aria-label="Hlavná navigácia"><a href="funkcie.html">Funkcie</a><a href="e-faktura-2027.html">e‑Faktúra 2027</a><a href="cennik.html">Cenník</a><a href="partneri.html">Pre účtovníkov</a><a href="kontakt.html">Kontakt</a></nav>
+  <nav class="nav-links" aria-label="Hlavná navigácia"><div class="dd"><button type="button" aria-expanded="false" aria-haspopup="true">Moduly <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu"><div class="col"><h5>Moduly</h5><a href="funkcie.html#ai-faktura">Fakturácia<small>Faktúry, QR platby, e‑faktúra</small></a><a href="funkcie.html#upomienky">Upomienky<small>Automaticky v 3 krokoch</small></a><a href="funkcie.html#opakovane">Opakované faktúry<small>Paušály a predplatné</small></a><a href="funkcie.html#vydavky">Výdavky a doklady<small>Sken bločkov s AI</small></a><a href="funkcie.html#dane">Daňový radar<small>Dane a odvody SZČO</small></a><a href="cennik.html#moduly">Autopark, Sklad, Mzdy<i>pripravujeme</i></a></div><div class="col"><h5>Poradňa a nástroje</h5><a href="e-faktura-2027.html">e‑Faktúra 2027<small>Čo sa mení od roku 2027</small></a><a href="nalezitosti-faktury.html">Náležitosti faktúry<small>Čo musí faktúra obsahovať</small></a><a href="pausalne-vydavky.html">Paušálne výdavky<small>Kedy sa oplatia</small></a><a href="app.html#/demo">Živé demo<small>Vyskúšajte bez registrácie</small></a><a href="funkcie.html">Všetky funkcie →</a></div></div></div><a href="partneri.html">Pre účtovníkov</a><a href="e-faktura-2027.html">e‑Faktúra 2027</a><a href="cennik.html">Cenník</a><a href="o-nas.html">O nás</a><a href="kontakt.html">Kontakt</a></nav>
   <div class="nav-cta"><a href="app.html#/login" class="link-login top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>Prihlásenie</a><a href="app.html#/onboarding" class="btn btn-primary">Registrácia</a>
   <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="mnav"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button></div>
 </div>
-<nav class="mnav" id="mnav" hidden><a href="funkcie.html">Funkcie</a><a href="e-faktura-2027.html">e‑Faktúra 2027</a><a href="cennik.html">Cenník</a><a href="partneri.html">Pre účtovníkov</a><a href="kontakt.html">Kontakt</a><a href="app.html#/login">Prihlásenie</a></nav>
+<nav class="mnav" id="mnav" hidden><a href="funkcie.html">Moduly a funkcie</a><a href="partneri.html">Pre účtovníkov</a><a href="e-faktura-2027.html">e‑Faktúra 2027</a><a href="cennik.html">Cenník</a><a href="o-nas.html">O nás</a><a href="kontakt.html">Kontakt</a><a href="app.html#/login">Prihlásenie</a></nav>
 </div></header>
 
 <main>
@@ -96,12 +96,69 @@
   <div class="mod" id="mod"></div>
 </div></section>
 
-<section style="padding-top:20px"><div class="wrap">
-  <div class="sec-h"><span class="kick">Pre koho</span><h2 class="big">Pre koho je <span class="hl">eFakturko</span> určený?</h2></div>
-  <div class="aud">
-    <div><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg></span><h3>Živnostník</h3><p>Faktúry za pár sekúnd, prehľad o daniach a odvodoch počas roka a upozornenie, keď sa blížite k hranici DPH.</p></div>
-    <div><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V4h8v3"/></svg></span><h3>Malá firma</h3><p>Viac používateľov, viac firiem v jednom účte, opakované faktúry a e‑faktúra pre platiteľov DPH od roku 2027.</p></div>
-    <div><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 14l4-4 4 4 5-6"/></svg></span><h3>Účtovník</h3><p>Čisté podklady od klientov, exporty v jednom formáte a provízia z každého klienta, ktorého privediete.</p></div>
+<section id="uctovnik" style="padding-top:20px"><div class="wrap">
+  <div class="sec-h"><span class="kick">Pre účtovníkov</span><h2 class="big">Faktúra odíde. <span class="hl">Podklady sú hotové.</span></h2><p>Takto prebieha bežný mesiac: vystavíte faktúru, klient zaplatí cez QR a účtovník dostane export v jednom formáte, bez prepisovania.</p></div>
+  <div class="prog-tabs"><span class="on">CSV export</span><span>UBL XML (Peppol)</span><span>Pohoda <i>pripravujeme</i></span><span>KROS Omega <i>pripravujeme</i></span><span>Money S3 <i>pripravujeme</i></span><span>MRP <i>pripravujeme</i></span></div>
+  <div class="flow">
+    <div class="flow-win"><div class="bar"><i style="background:#F87171"></i><i style="background:#FBBF24"></i><i style="background:#34D399"></i><span class="url">efakturko.netlify.app/app</span></div>
+      <div class="flow-rows"><div><b>20260142</b><span>Kaviareň Mlyn s.r.o.</span><span class="pill p-paid">Zaplatená</span><b>1 549,80 €</b></div><div><b>20260141</b><span>Novák &amp; partneri</span><span class="pill p-sent">Odoslaná</span><b>1 800,00 €</b></div><div><b>20260140</b><span>Studio Pixel a.s.</span><span class="pill p-paid">Zaplatená</span><b>960,00 €</b></div><div class="exp">⇣ Export za november · faktury-2026-11.csv</div></div></div>
+    <div class="flow-arrow" aria-hidden="true">→</div>
+    <div class="flow-win dark"><div class="bar"><span class="url" style="background:#2E1065;color:#C4B5FD">faktury-2026-11.csv</span></div>
+      <pre>cislo;klient;ico;vystavena;zaklad;dph;spolu
+20260142;Kaviareň Mlyn s.r.o.;52418337;…;1260,00;289,80;1549,80
+20260141;Novák &amp; partneri;47112233;…;1800,00;0,00;1800,00
+20260140;Studio Pixel a.s.;45678901;…;960,00;0,00;960,00</pre></div>
+  </div>
+  <div class="feat4">
+    <div><b>Vystavenie</b><p>Faktúra z vety alebo formulára, číslovanie a DPH sa nastavia samé.</p></div>
+    <div><b>Úhrada</b><p>Klient zaplatí cez QR PAY by square, úhradu označíte jedným klikom.</p></div>
+    <div><b>Export</b><p>Všetky faktúry naraz do CSV alebo každú ako e‑faktúru v UBL XML.</p></div>
+    <div><b>Účtovník</b><p>Dostane podklady v jednom formáte. Priamy zápis do účtovných programov pripravujeme.</p></div>
+  </div>
+  <div class="hero-cta" style="justify-content:center;margin-top:28px"><a href="partneri.html" class="btn btn-primary">Program pre účtovníkov →</a><a href="app.html#/demo" class="btn btn-ghost" style="background:var(--violet-bg);border-color:transparent;color:var(--violet)">Vyskúšať demo</a></div>
+</div></section>
+
+<section class="mob-sec"><div class="wrap">
+  <div class="sec-h"><span class="kick" style="border-color:#F0ABFC;color:#A21CAF">Mobil</span><h2 class="big" style="color:#701A75">Používajte <span class="hl" style="background:#FAE8FF;color:#C026D3">eFakturko</span> aj v mobile</h2><p>Aplikácia beží v prehliadači telefónu, nič neinštalujete. Pridajte si ju na plochu a máte ju po ruke ako bežnú aplikáciu.</p></div>
+  <div class="mob-hero"><div><h3>Faktúru vystavíte aj z mobilu</h3><p>Otvorte efakturko.netlify.app/app v telefóne a v prehliadači zvoľte „Pridať na plochu“. Faktúry, bločky aj prehľad máte vždy pri sebe.</p><a href="app.html#/demo" class="btn btn-lg" style="background:#fff;color:#A21CAF">Otvoriť demo v mobile →</a></div>
+    <div class="phone"><div class="ph-scr"><div class="ph-top"><b>Prehľad</b><span>JN</span></div><div class="ph-kpi"><span>Tento mesiac</span><b>4 280 €</b></div><div class="ph-btn">+ Nová faktúra</div><div class="ph-row"><b>20260142</b><span class="pill p-paid">Zaplatená</span></div><div class="ph-row"><b>20260141</b><span class="pill p-sent">Odoslaná</span></div><div class="ph-row"><b>20260139</b><span class="pill p-late">Po splatnosti</span></div></div></div></div>
+  <div class="mob-cards">
+    <div><h3>Faktúra z vety</h3><p>Nadiktujte alebo napíšte zadanie a AI pripraví faktúru.</p></div>
+    <div><h3>Sken bločkov</h3><p>Odfoťte účtenku a výdavok sa vyplní sám.</p></div>
+    <div><h3>Prehľad vždy po ruke</h3><p>Neuhradené faktúry, splatnosti a upozornenia na jednom mieste.</p></div>
+  </div>
+</div></section>
+
+<section id="pre-koho"><div class="wrap">
+  <div class="aud-wrap">
+    <div class="sec-h"><span class="kick">Zameranie</span><h2 class="big">Pre koho je <span class="hl">eFakturko</span> určené?</h2><p>Či podnikáte sami, vediete firmu alebo spracúvate účtovníctvo pre klientov.</p></div>
+    <div class="aud-tabs">
+      <div class="aud-list" role="tablist">
+        <button class="on" data-aud="0" role="tab">Živnostník <span>›</span></button>
+        <button data-aud="1" role="tab">Firma <span>›</span></button>
+        <button data-aud="2" role="tab">Účtovnícka firma <span>›</span></button>
+        <a href="e-faktura-2027.html" class="btn btn-primary" style="margin-top:12px">Týka sa ma e‑faktúra? →</a>
+      </div>
+      <div class="aud-panel" id="audPanel"></div>
+    </div>
+    <p class="note">Od 1. 1. 2027 sa povinná e‑faktúra týka platiteľov DPH pri tuzemských obchodoch medzi firmami. Prijímať e‑faktúry budú musieť vedieť všetci podnikatelia.</p>
+  </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="migr"><div><span class="kick">Prechod</span><h2>Prechádzate z iného programu?</h2><p>Pošlite nám export klientov a faktúr z doterajšieho programu (CSV alebo Excel). Pomôžeme vám ich preniesť, aby ste mohli pokračovať v číslovaní bez prerušenia.</p>
+    <ul><li>Klienti s IČO, DIČ a adresami</li><li>Pokračovanie v číselnom rade faktúr</li><li>Bezplatne pri prechode na platený plán</li></ul>
+    <a href="kontakt.html" class="btn btn-primary" style="margin-top:20px;background:var(--ink)">Požiadať o prechod →</a></div>
+    <div class="migr-art" aria-hidden="true"><span>CSV</span><span>XLSX</span><span class="e">e</span><span>XML</span></div></div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+  <div class="dark-band">
+    <div class="sec-h" style="margin-bottom:34px"><span class="kick" style="border-color:rgba(255,255,255,.4);color:#fff">Pre firmy</span><h2 class="big" style="color:#fff">Riešenia pre <span class="hl" style="background:#7C3AED;color:#fff">firmy a partnerov</span></h2><p style="color:#DDD6FE">Napojte fakturáciu na svoj systém alebo ju ponúknite klientom pod vlastnou značkou.</p></div>
+    <div class="db-cards">
+      <div class="db-card"><h3>API a Peppol pre vývojárov <span class="soon">Pripravujeme</span></h3><p>Vystavovanie faktúr a e‑faktúr z vášho e‑shopu alebo CRM cez API. Súčasť plánov Business a Max.</p><a href="kontakt.html" class="btn btn-primary">Mám záujem →</a></div>
+      <div class="db-card light"><h3>White‑label</h3><p>Faktúry s vaším logom pre vašich klientov. Dostupné pre partnerov s 25 a viac klientmi.</p><a href="partneri.html" class="btn btn-primary">Zistiť viac →</a></div>
+    </div>
   </div>
 </div></section>
 
@@ -155,19 +212,31 @@
     <details><summary>Môžem kedykoľvek zmeniť alebo zrušiť plán?</summary><p>Áno, jedným klikom v nastaveniach. Faktúry si môžete kedykoľvek exportovať.</p></details>
     <details><summary>Je eFakturko vhodný aj pre s.r.o.?</summary><p>Áno. Plán Business podporuje viac používateľov, viac firiem v jednom účte, prístup pre účtovníka a API.</p></details>
   </div>
+  <div style="text-align:center;margin-top:26px"><a href="cennik.html#faq" class="btn btn-primary" style="background:var(--ink)">Všetky otázky</a></div>
 </div></section><!--/block:faq-->
+<section id="poradna" style="padding-top:0"><div class="wrap">
+  <div class="sec-h"><span class="kick">Poradňa</span><h2 class="big"><span class="hl">Poradňa</span> eFakturko</h2><p>Praktické návody o fakturácii, daniach a e‑faktúre pre živnostníkov a malé firmy.</p></div>
+  <div class="posts">
+    <a href="e-faktura-2027.html" class="post"><div class="post-img g1"><span>2027</span></div><div class="post-b"><span class="tag">Legislatíva</span><h3>e‑Faktúra od 1. 1. 2027: čo sa mení a ako sa pripraviť</h3><p>Koho sa povinnosť týka, čo je Peppol a čo urobiť už teraz.</p></div></a>
+    <a href="nalezitosti-faktury.html" class="post"><div class="post-img g2"><span>§ 74</span></div><div class="post-b"><span class="tag">Návod</span><h3>Náležitosti faktúry: čo musí faktúra obsahovať</h3><p>Povinné údaje pre platiteľov aj neplatiteľov DPH a časté chyby.</p></div></a>
+    <a href="pausalne-vydavky.html" class="post"><div class="post-img g3"><span>60 %</span></div><div class="post-b"><span class="tag">Dane</span><h3>Paušálne výdavky SZČO: kedy sa oplatia</h3><p>Ako fungujú paušálne výdavky a kedy sú výhodnejšie skutočné.</p></div></a>
+  </div>
+</div></section>
+
 
 <div class="wrap"><div class="final"><h2>Prestaňte naháňať platby.<br><span class="hl">Začnite fakturovať.</span></h2><p style="font-size:18px;margin:18px auto 30px;max-width:520px;color:#DDD6FE">Prvá faktúra je hotová za pár minút.</p><a href="app.html#/onboarding" class="btn btn-lg" style="background:#fff;color:var(--violet)">Vytvoriť účet zadarmo →</a></div></div>
 </main>
 
-<footer><div class="wrap">
+<footer class="light"><div class="wrap">
   <div class="foot">
-    <div><a href="./" class="logo" style="color:#fff"><span class="logo-mark" style="background:#fff;color:var(--violet)"><svg viewBox="0 0 24 24"><text x="12" y="17.6" text-anchor="middle" font-size="18" font-weight="800" font-family="Plus Jakarta Sans,Arial,sans-serif" fill="currentColor">e</text></svg></span><span>eFakturko</span></a><p style="margin-top:12px;max-width:300px">Fakturácia s AI pre živnostníkov a firmy na Slovensku.</p></div>
-    <div><h4>Produkt</h4><nav><a href="funkcie.html">Funkcie</a><a href="cennik.html">Cenník</a><a href="e-faktura-2027.html">e‑Faktúra 2027</a><a href="app.html#/demo">Živé demo</a></nav></div>
-    <div><h4>Spoločnosť</h4><nav><a href="partneri.html">Pre účtovníkov</a><a href="kontakt.html">Kontakt</a><a href="app.html#/onboarding">Registrácia</a></nav></div>
-    <div><h4>Právne informácie</h4><nav><a href="obchodne-podmienky.html">Obchodné podmienky</a><a href="ochrana-osobnych-udajov.html">Ochrana osobných údajov</a></nav></div>
+    <div><a href="./" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24"><text x="12" y="17.6" text-anchor="middle" font-size="18" font-weight="800" font-family="Plus Jakarta Sans,Arial,sans-serif" fill="currentColor">e</text></svg></span><span>eFakturko</span></a><p style="margin-top:14px;max-width:280px;line-height:1.6">Online fakturácia s AI pre živnostníkov a firmy na Slovensku.</p><p style="margin-top:14px"><a href="kontakt.html" style="color:var(--violet);font-weight:600">Napíšte nám →</a></p></div>
+    <div><h4>Stránky</h4><nav><a href="funkcie.html">Funkcie</a><a href="cennik.html">Cenník</a><a href="partneri.html">Pre účtovníkov</a><a href="o-nas.html">O nás</a><a href="kontakt.html">Kontakt</a></nav></div>
+    <div><h4>Moduly</h4><nav><a href="funkcie.html#ai-faktura">Fakturácia</a><a href="funkcie.html#upomienky">Upomienky</a><a href="funkcie.html#vydavky">Výdavky</a><a href="funkcie.html#dane">Daňový radar</a><a href="cennik.html#moduly">Ďalšie moduly</a></nav></div>
+    <div><h4>Poradňa</h4><nav><a href="e-faktura-2027.html">e‑Faktúra 2027</a><a href="nalezitosti-faktury.html">Náležitosti faktúry</a><a href="pausalne-vydavky.html">Paušálne výdavky</a><a href="app.html#/demo">Živé demo</a></nav></div>
+    <div class="docs"><h4>Dokumenty</h4><nav><a href="obchodne-podmienky.html">Obchodné podmienky</a><a href="ochrana-osobnych-udajov.html">Ochrana osobných údajov</a></nav></div>
   </div>
   <div class="foot-b"><span>© <span id="yr"></span> eFakturko</span><span>Všetky ceny sú uvedené bez DPH</span></div>
+  <div class="watermark" aria-hidden="true">eFakturko</div>
 </div></footer>
 <script src="site.js" defer></script>
 </body>
