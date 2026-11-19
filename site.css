@@ -414,3 +414,18 @@ footer.light .foot-b{border-top:1px solid var(--line-2)}
   .flow{padding:14px}.flow-rows>div{grid-template-columns:70px 1fr auto}.flow-rows>div>b:last-child{display:none}
   footer.light .foot{grid-template-columns:1fr}
 }
+
+.reg-form{max-width:860px;margin:0 auto}
+.reg-row{display:flex;gap:12px;align-items:flex-end}
+.reg-out{max-width:1080px;margin:24px auto 0}
+.reg-msg{text-align:center;color:var(--text-2);display:flex;gap:8px;justify-content:center;align-items:center}
+.reg-msg.err{color:var(--coral)}
+.reg-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:14px}
+.reg-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;display:flex;flex-direction:column;gap:12px}
+.reg-h{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.reg-h b{color:var(--ink);font-size:17px}
+.reg-card dl{display:grid;grid-template-columns:80px 1fr;gap:6px 12px;font-size:14px}
+.reg-card dt{color:var(--muted)}
+.reg-card dd{color:var(--ink);margin:0}
+.reg-card .btn{align-self:flex-start}
+@media (max-width:760px){.reg-row{flex-direction:column;align-items:stretch}.reg-grid{grid-template-columns:1fr}}

@@ -20,6 +20,7 @@ PAGES = {
     'o-nas':                   ('O nás · eFakturko', 'Prečo vzniklo eFakturko a ako pristupujeme k fakturácii pre živnostníkov a malé firmy.'),
     'nalezitosti-faktury':     ('Náležitosti faktúry · eFakturko', 'Čo musí obsahovať faktúra na Slovensku: povinné údaje pre platiteľov aj neplatiteľov DPH a najčastejšie chyby.'),
     'pausalne-vydavky':        ('Paušálne výdavky SZČO · eFakturko', 'Ako fungujú paušálne výdavky živnostníka, aký majú limit a kedy sa oplatia viac ako skutočné výdavky.'),
+    'vyhladat-firmu':          ('Vyhľadať firmu · eFakturko', 'Vyhľadajte firmu alebo živnostníka podľa názvu alebo IČO v štátnom Registri právnických osôb. Zadarmo.'),
     'kontakt':                 ('Kontakt · eFakturko', 'Napíšte nám otázku, požiadajte o ukážku alebo nahláste problém.'),
     'obchodne-podmienky':      ('Obchodné podmienky · eFakturko', 'Všeobecné obchodné podmienky služby eFakturko.'),
     'ochrana-osobnych-udajov': ('Ochrana osobných údajov · eFakturko', 'Zásady ochrany osobných údajov služby eFakturko.'),
@@ -28,7 +29,7 @@ PAGES = {
 NAV = [('partneri', 'Pre účtovníkov'), ('e-faktura-2027', 'e‑Faktúra 2027'), ('cennik', 'Cenník'), ('o-nas', 'O nás'), ('kontakt', 'Kontakt')]
 DD = ('<div class="dd"><button type="button" aria-expanded="false" aria-haspopup="true">Moduly <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg></button><div class="dd-menu">'
   '<div class="col"><h5>Moduly</h5><a href="funkcie.html#ai-faktura">Fakturácia<small>Faktúry, QR platby, e‑faktúra</small></a><a href="funkcie.html#upomienky">Upomienky<small>Automaticky v 3 krokoch</small></a><a href="funkcie.html#opakovane">Opakované faktúry<small>Paušály a predplatné</small></a><a href="funkcie.html#vydavky">Výdavky a doklady<small>Sken bločkov s AI</small></a><a href="funkcie.html#dane">Daňový radar<small>Dane a odvody SZČO</small></a><a href="cennik.html#moduly">Autopark, Sklad, Mzdy<i>pripravujeme</i></a></div>'
-  '<div class="col"><h5>Poradňa a nástroje</h5><a href="e-faktura-2027.html">e‑Faktúra 2027<small>Čo sa mení od roku 2027</small></a><a href="nalezitosti-faktury.html">Náležitosti faktúry<small>Čo musí faktúra obsahovať</small></a><a href="pausalne-vydavky.html">Paušálne výdavky<small>Kedy sa oplatia</small></a><a href="app.html#/demo">Živé demo<small>Vyskúšajte bez registrácie</small></a><a href="funkcie.html">Všetky funkcie →</a></div>'
+  '<div class="col"><h5>Poradňa a nástroje</h5><a href="e-faktura-2027.html">e‑Faktúra 2027<small>Čo sa mení od roku 2027</small></a><a href="nalezitosti-faktury.html">Náležitosti faktúry<small>Čo musí faktúra obsahovať</small></a><a href="pausalne-vydavky.html">Paušálne výdavky<small>Kedy sa oplatia</small></a><a href="vyhladat-firmu.html">Vyhľadať firmu<small>Overenie IČO a sídla v registri</small></a><a href="app.html#/demo">Živé demo<small>Vyskúšajte bez registrácie</small></a></div>'
   '</div></div>')
 LOGO = '<span class="logo-mark"><svg viewBox="0 0 24 24"><text x="12" y="17.6" text-anchor="middle" font-size="18" font-weight="800" font-family="Plus Jakarta Sans,Arial,sans-serif" fill="currentColor">e</text></svg></span><span>eFakturko</span>'
 
@@ -82,7 +83,7 @@ def layout(page, title, desc, body):
     <div><a href="./" class="logo">{LOGO}</a><p style="margin-top:14px;max-width:280px;line-height:1.6">Online fakturácia s AI pre živnostníkov a firmy na Slovensku.</p><p style="margin-top:14px"><a href="kontakt.html" style="color:var(--violet);font-weight:600">Napíšte nám →</a></p></div>
     <div><h4>Stránky</h4><nav><a href="funkcie.html">Funkcie</a><a href="cennik.html">Cenník</a><a href="partneri.html">Pre účtovníkov</a><a href="o-nas.html">O nás</a><a href="kontakt.html">Kontakt</a></nav></div>
     <div><h4>Moduly</h4><nav><a href="funkcie.html#ai-faktura">Fakturácia</a><a href="funkcie.html#upomienky">Upomienky</a><a href="funkcie.html#vydavky">Výdavky</a><a href="funkcie.html#dane">Daňový radar</a><a href="cennik.html#moduly">Ďalšie moduly</a></nav></div>
-    <div><h4>Poradňa</h4><nav><a href="e-faktura-2027.html">e‑Faktúra 2027</a><a href="nalezitosti-faktury.html">Náležitosti faktúry</a><a href="pausalne-vydavky.html">Paušálne výdavky</a><a href="app.html#/demo">Živé demo</a></nav></div>
+    <div><h4>Poradňa</h4><nav><a href="e-faktura-2027.html">e‑Faktúra 2027</a><a href="nalezitosti-faktury.html">Náležitosti faktúry</a><a href="pausalne-vydavky.html">Paušálne výdavky</a><a href="vyhladat-firmu.html">Vyhľadať firmu</a><a href="app.html#/demo">Živé demo</a></nav></div>
     <div class="docs"><h4>Dokumenty</h4><nav><a href="obchodne-podmienky.html">Obchodné podmienky</a><a href="ochrana-osobnych-udajov.html">Ochrana osobných údajov</a></nav></div>
   </div>
   <div class="foot-b"><span>© <span id="yr"></span> eFakturko</span><span>Všetky ceny sú uvedené bez DPH</span></div>

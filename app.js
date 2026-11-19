@@ -562,8 +562,9 @@ function vClients() {
 }
 function clientForm(c, from) {
   const isNew = !c; c = c || { name: '', ico: '', dic: '', icdph: '', address: '', email: '' };
-  const m = modal(`${mh(isNew ? 'Nový klient' : 'Upraviť klienta', 'Zadajte IČO a údaje doplníme z obchodného registra')}<div class="modal-b"><form id="cf" style="display:flex;flex-direction:column;gap:12px">
-    <div class="field"><label>IČO</label><div class="inline"><input class="input mono" name="ico" value="${esc(c.ico)}" placeholder="12345678" inputmode="numeric" autofocus><button type="button" class="btn btn-ghost" id="lk">${ic('search')} Načítať</button></div></div>
+  const m = modal(`${mh(isNew ? 'Nový klient' : 'Upraviť klienta', 'Vyhľadajte firmu alebo živnostníka v štátnom registri')}<div class="modal-b"><form id="cf" style="display:flex;flex-direction:column;gap:12px">
+    <div class="field"><label>Vyhľadať v registri</label><div class="rs"><input class="input" data-rs="1" placeholder="Názov firmy, meno živnostníka alebo IČO" autocomplete="off" autofocus><div class="rs-list" hidden></div></div><span class="muted" style="font-size:11.5px">Firmy aj živnostníci zo štátneho registra · ${esc(F.REG_SOURCE)}</span></div>
+    <div class="field"><label>IČO</label><div class="inline"><input class="input mono" name="ico" value="${esc(c.ico)}" placeholder="12345678" inputmode="numeric"><button type="button" class="btn btn-ghost" id="lk">${ic('search')} Načítať</button></div></div>
     <div class="field"><label>Názov</label><input class="input" name="name" value="${esc(c.name)}" required></div>
     <div class="field"><label>Adresa</label><input class="input" name="address" value="${esc(c.address)}"></div>
     <div class="grid-2"><div class="field"><label>DIČ</label><input class="input mono" name="dic" value="${esc(c.dic)}"></div><div class="field"><label>IČ DPH</label><input class="input mono" name="icdph" value="${esc(c.icdph)}"></div></div>
@@ -571,7 +572,7 @@ function clientForm(c, from) {
     <div style="display:flex;justify-content:space-between;gap:8px;margin-top:6px">${!isNew ? `<button type="button" class="btn btn-quiet" id="del" style="color:var(--coral)">${ic('trash')} Zmazať</button>` : '<span></span>'}<button class="btn btn-primary">${isNew ? 'Pridať klienta' : 'Uložiť'}</button></div>
   </form></div>`);
   const f = $('#cf', m);
-  $('#lk', m).onclick = async () => { const b = $('#lk', m); b.innerHTML = '<span class="spinner"></span>'; const r = await F.lookupIco(f.ico.value); b.innerHTML = `${ic('search')} Načítať`; if (!r) return toast('Firmu sa nepodarilo nájsť — vyplňte ručne', 'err'); f.name.value = r.name; f.address.value = r.address; if (r.dic) f.dic.value = r.dic; if (r.icdph) f.icdph.value = r.icdph; toast('Údaje načítané z registra'); };
+  $('#lk', m).onclick = async () => { const b = $('#lk', m); b.innerHTML = '<span class="spinner"></span>'; const r = await F.lookupIco(f.ico.value); b.innerHTML = `${ic('search')} Načítať`; if (!r) return toast(F.lookupIco.lastError || 'Firmu sa nepodarilo nájsť — vyplňte ručne', 'err'); fillClient(f, r); };
   const del = $('#del', m); if (del) del.onclick = async () => { if (await confirmBox('Zmazať klienta?', 'Faktúry klienta zostanú zachované.', 'Zmazať', true)) { S.clients = S.clients.filter((x) => x.id !== c.id); F.save(); render(); } };
   f.onsubmit = (e) => {
     e.preventDefault();
@@ -781,6 +782,7 @@ function vSettings() {
   return `<div class="page-h"><div><h1>Nastavenia</h1><div class="sub">Údaje firmy sa zobrazujú na každej faktúre.</div></div></div>
   <div class="dash"><div>
     <form class="card card-pad" data-form="company" style="display:flex;flex-direction:column;gap:14px"><h3>Firma</h3>
+      <div class="field"><label>Vyhľadať v registri</label><div class="rs"><input class="input" data-rs="1" placeholder="Názov firmy, meno živnostníka alebo IČO" autocomplete="off"><div class="rs-list" hidden></div></div><span class="muted" style="font-size:11.5px">Firmy aj živnostníci zo štátneho registra · ${esc(F.REG_SOURCE)}</span></div>
       <div class="field"><label>IČO</label><div class="inline"><input class="input mono" name="ico" value="${esc(c.ico)}"><button type="button" class="btn btn-ghost" data-act="lookupCompany">${ic('search')} Načítať</button></div></div>
       <div class="field"><label>Obchodné meno</label><input class="input" name="name" value="${esc(c.name)}"></div>
       <div class="field"><label>Sídlo</label><input class="input" name="address" value="${esc(c.address)}"></div>
@@ -827,8 +829,9 @@ function vOnboarding() {
       <p class="muted" style="font-size:13px;text-align:center">Už máte účet? <a href="#/login" style="color:var(--ink);font-weight:600">Prihláste sa</a> · <a href="#/demo" style="color:var(--ink);font-weight:600">Pozrieť demo</a></p>`,
     2: `<h2>Vaša firma</h2>
       <div class="seg"><label><input type="radio" name="type" value="szco" ${d.type !== 'sro' ? 'checked' : ''}><b>Živnostník</b><span>SZČO</span></label><label><input type="radio" name="type" value="sro" ${d.type === 'sro' ? 'checked' : ''}><b>Firma</b><span>s.r.o., a.s.</span></label></div>
-      <div class="field"><label>IČO</label><div class="inline"><input class="input mono" name="ico" value="${esc(d.ico || '')}" placeholder="12345678" inputmode="numeric" autofocus><button type="button" class="btn btn-ghost" data-act="obLookup">${ic('search')} Načítať</button></div><span class="muted" style="font-size:12px">Tip: skúste 52418337</span></div>
-      <div class="field"><label>Obchodné meno</label><input class="input" name="cname" value="${esc(d.cname || d.name || '')}" required></div>
+      <div class="field"><label>Vyhľadať v registri</label><div class="rs"><input class="input" data-rs="ob" placeholder="Názov firmy, meno živnostníka alebo IČO" autocomplete="off"><div class="rs-list" hidden></div></div><span class="muted" style="font-size:11.5px">Firmy aj živnostníci zo štátneho registra · ${esc(F.REG_SOURCE)}</span></div>
+      <div class="field"><label>IČO</label><div class="inline"><input class="input mono" name="ico" value="${esc(d.ico || '')}" placeholder="12345678" inputmode="numeric"><button type="button" class="btn btn-ghost" data-act="obLookup">${ic('search')} Načítať</button></div></div>
+      <div class="field"><label>Obchodné meno</label><input class="input" name="cname" value="${esc(d.cname || d.name || '')}" required></div><input type="hidden" name="register" value="${esc(d.register || '')}">
       <div class="field"><label>Sídlo</label><input class="input" name="address" value="${esc(d.address || '')}" required placeholder="Ulica číslo, PSČ Mesto"></div>
       <div class="grid-2"><div class="field"><label>DIČ</label><input class="input mono" name="dic" value="${esc(d.dic || '')}"></div><div class="field"><label>IČ DPH</label><input class="input mono" name="icdph" value="${esc(d.icdph || '')}" placeholder="ak ste platiteľ"></div></div>
       <label style="display:flex;gap:10px;align-items:center;font-size:14px"><span class="switch"><input type="checkbox" name="vatPayer" ${d.vatPayer ? 'checked' : ''}><span></span></span> Som platiteľ DPH</label>
@@ -860,7 +863,7 @@ function obFinish() {
   const d = OB.d;
   F.reset();
   S.user = { name: d.name.trim(), email: d.email.trim(), plan: d.plan || 'free', createdAt: Date.now(), onboarded: true, partner: !!d.partner };
-  S.company = { type: d.type || 'szco', name: d.cname.trim(), person: d.name.trim(), ico: (d.ico || '').replace(/\s/g, ''), dic: d.dic || '', icdph: d.icdph || '', vatPayer: !!d.vatPayer, address: d.address, iban: F.ibanClean(d.iban), email: d.cemail || d.email, phone: d.phone || '', register: '' };
+  S.company = { type: d.type || 'szco', name: d.cname.trim(), person: d.name.trim(), ico: (d.ico || '').replace(/\s/g, ''), dic: d.dic || '', icdph: d.icdph || '', vatPayer: !!d.vatPayer, address: d.address, iban: F.ibanClean(d.iban), email: d.cemail || d.email, phone: d.phone || '', register: d.register || '' };
   S.settings.dueDays = +d.due || 14;
   if (d.plan && d.plan !== 'free') { S.billing.trialEnds = Date.now() + 14 * 864e5; S.billing.trialUsed = true; S.billing.cycle = d.cycle || 'm'; }
   if (d.partner) S.billing.coupon = 'PARTNER1';
@@ -994,6 +997,61 @@ async function aiInvoice(q, btn) {
   setTimeout(() => toast(`✦ Návrh pripravený${r.data.clientMatchedExisting ? '' : ''} — skontrolujte a uložte`, 'ai'), 150);
 }
 
+
+/* ================= REGISTER SEARCH (RPO) ================= */
+const regLine = (r) => `${esc(r.name)}<small>IČO ${esc(r.ico)} · ${esc(r.address || 'bez adresy')}${r.type === 'szco' ? ' · živnostník' : r.type === 'firma' ? ' · firma' : ''}${r.source === 'demo' ? ' · ukážka' : ''}</small>`;
+function fillClient(f, r) {
+  f.ico.value = r.ico || ''; f.name.value = r.name || ''; f.address.value = r.address || '';
+  if (r.dic) f.dic.value = r.dic;
+  if (r.icdph) f.icdph.value = r.icdph;
+  toast(r.dic ? 'Údaje načítané z registra' : 'Údaje načítané z registra · DIČ a IČ DPH doplňte ručne');
+}
+function fillCompany(f, r) {
+  f.ico.value = r.ico || ''; f.name.value = r.name || ''; f.address.value = r.address || '';
+  if (r.dic) f.dic.value = r.dic;
+  if (r.icdph) f.icdph.value = r.icdph;
+  if (r.registerText && f.register) f.register.value = r.registerText;
+  toast('Údaje načítané z registra');
+}
+function fillOnboarding(f, r) {
+  f.ico.value = r.ico || ''; f.cname.value = r.name || ''; f.address.value = r.address || '';
+  f.dic.value = r.dic || ''; f.icdph.value = r.icdph || '';
+  if (r.icdph) f.vatPayer.checked = true;
+  if (f.register) f.register.value = r.registerText || '';
+  const t = f.querySelector(`input[name=type][value=${r.type === 'firma' ? 'sro' : 'szco'}]`);
+  if (t) t.checked = true;
+  toast('Údaje načítané z registra');
+}
+let rsTimer, rsSeq = 0;
+function rsRun(input) {
+  const list = input.parentElement.querySelector('.rs-list');
+  const q = input.value.trim();
+  clearTimeout(rsTimer);
+  if (q.length < 3) { list.hidden = true; return; }
+  list.hidden = false;
+  list.innerHTML = '<div class="rs-msg"><span class="spinner"></span> Hľadám v registri…</div>';
+  const seq = ++rsSeq;
+  rsTimer = setTimeout(async () => {
+    const { results, error } = await F.searchRegister(q);
+    if (seq !== rsSeq) return;
+    list._items = results;
+    list.innerHTML = results.length
+      ? results.map((r, k) => `<button type="button" class="rs-item" data-rsi="${k}">${regLine(r)}</button>`).join('') + (error ? `<div class="rs-msg err">${esc(error)}</div>` : '')
+      : `<div class="rs-msg${error ? ' err' : ''}">${esc(error || 'Nič sa nenašlo. Skúste iný názov alebo IČO.')}</div>`;
+  }, 450);
+}
+function rsPick(btn) {
+  const list = btn.closest('.rs-list');
+  const r = list._items?.[+btn.dataset.rsi];
+  if (!r) return;
+  const input = list.parentElement.querySelector('[data-rs]');
+  const f = input.closest('form');
+  list.hidden = true; input.value = r.name;
+  if (input.dataset.rs === 'ob') fillOnboarding(f, r);
+  else if (f.dataset.form === 'company') fillCompany(f, r);
+  else fillClient(f, r);
+}
+
 /* ================= EVENTS ================= */
 const ACT = {
   close: () => closeModal(),
@@ -1038,8 +1096,8 @@ const ACT = {
   wipe: async () => { if (await confirmBox('Zmazať účet?', 'Všetky faktúry, klienti a výdavky budú nenávratne zmazané z tohto zariadenia. Odporúčame najprv stiahnuť zálohu.', 'Zmazať všetko', true)) { F.reset(); location.href = './'; } },
   backup: () => { F.download(`faktum-zaloha-${today()}.json`, JSON.stringify(S, null, 2), 'application/json'); toast('Záloha stiahnutá'); },
   exportCsv: () => { const rows = [['cislo', 'klient', 'ico', 'vystavena', 'splatnost', 'zaklad', 'dph', 'spolu', 'stav']].concat(S.invoices.map((i) => { const t = totals(i); return [i.number, i.client.name, i.client.ico, i.issueDate, i.dueDate, t.base, t.vat, t.total, F.STATUS[status(i)]]; })); F.download(`faktury-${today()}.csv`, '﻿' + rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(';')).join('\n'), 'text/csv'); },
-  lookupCompany: async () => { const f = $('[data-form="company"]'); const r = await F.lookupIco(f.ico.value); if (!r) return toast('Firmu sa nepodarilo nájsť', 'err'); f.name.value = r.name; f.address.value = r.address; if (r.dic) f.dic.value = r.dic; if (r.icdph) f.icdph.value = r.icdph; toast('Načítané z registra'); },
-  obLookup: async (el) => { const f = el.closest('form'); el.innerHTML = '<span class="spinner"></span>'; const r = await F.lookupIco(f.ico.value); el.innerHTML = `${ic('search')} Načítať`; if (!r) return toast('Firmu sa nepodarilo nájsť — vyplňte ručne', 'err'); f.cname.value = r.name; f.address.value = r.address; f.dic.value = r.dic || ''; f.icdph.value = r.icdph || ''; if (r.icdph) f.vatPayer.checked = true; toast('Údaje načítané z registra'); },
+  lookupCompany: async () => { const f = $('[data-form="company"]'); const r = await F.lookupIco(f.ico.value); if (!r) return toast(F.lookupIco.lastError || 'Firmu sa nepodarilo nájsť', 'err'); fillCompany(f, r); },
+  obLookup: async (el) => { const f = el.closest('form'); el.innerHTML = '<span class="spinner"></span>'; const r = await F.lookupIco(f.ico.value); el.innerHTML = `${ic('search')} Načítať`; if (!r) return toast(F.lookupIco.lastError || 'Firmu sa nepodarilo nájsť — vyplňte ručne', 'err'); fillOnboarding(f, r); },
   obBack: () => { const f = $('.ob-form'); for (const [k, v] of new FormData(f)) OB.d[k] = v; OB.step = Math.max(1, OB.step - 1); vOnboarding(); },
   cmdAi: (el, e) => { e.preventDefault(); const q = $('[data-form="cmd"] input').value; aiInvoice(q); },
   admTab: (el) => { ADM.tab = el.dataset.t; vAdmin(); },
@@ -1048,6 +1106,8 @@ const ACT = {
   admCsv: () => { const A = F.adminData(); const users = [F.liveUser(), ...A.users].filter(Boolean); F.download('faktum-users.csv', '﻿' + [['id', 'meno', 'email', 'plan', 'cyklus', 'faktury', 'ai', 'registracia', 'stav'].join(';'), ...users.map((u) => [u.id, u.name, u.email, u.plan, u.cycle, u.invoices, u.ai, new Date(u.createdAt).toISOString().slice(0, 10), u.status].join(';'))].join('\n'), 'text/csv'); },
 };
 document.addEventListener('click', (e) => {
+  const rsi = e.target.closest('.rs-item'); if (rsi) { rsPick(rsi); return; }
+  if (!e.target.closest('.rs')) $$('.rs-list').forEach((l) => (l.hidden = true));
   const href = e.target.closest('tr[data-href]'); if (href && !e.target.closest('a,button,select,input')) { go(href.dataset.href); return; }
   const a = e.target.closest('[data-act]');
   if (a && ACT[a.dataset.act]) { if (a.tagName === 'A' && a.getAttribute('href') === '#') e.preventDefault(); ACT[a.dataset.act](a, e); return; }
@@ -1057,6 +1117,7 @@ document.addEventListener('click', (e) => {
 let searchT;
 document.addEventListener('input', (e) => {
   const el = e.target;
+  if (el.dataset.rs) { rsRun(el); return; }
   if (ED && el.dataset.f && el.closest('.editor, .page')) { ED[el.dataset.f] = el.value; if (el.dataset.f === 'issueDate' && el.value) { ED.dueDate = addDays(el.value, S.settings.dueDays); const d = $('[data-f="dueDate"]'); if (d) d.value = ED.dueDate; } }
   if (ED && el.dataset.it !== undefined) { const it = ED.items[+el.dataset.it]; const k = el.dataset.k; it[k] = ['qty', 'price', 'vat'].includes(k) ? +String(el.value).replace(',', '.').replace(/\s/g, '') || 0 : el.value; updateTotals(); }
   const ai = el.dataset.actInput;

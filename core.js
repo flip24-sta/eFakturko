@@ -128,30 +128,45 @@ function ibanValid(s) {
 const bankOf = (s) => { const v = ibanClean(s); return v.startsWith('SK') ? BANKS[v.slice(4, 8)] || '' : ''; };
 
 /* ---------------- company register lookup ---------------- */
-// Built-in sample register for the demo + a best-effort call to the public RPO API.
+// Live lookup in the official Register právnických osôb (RPO) through the
+// /.netlify/functions/register proxy. The few fictional companies of the demo
+// account (their IČOs do not exist in RPO) are answered locally.
 const REGISTER = {
   '52418337': { name: 'Kaviareň Mlyn s.r.o.', address: 'Hlavná 12, 917 01 Trnava', dic: '2121034567', icdph: 'SK2121034567' },
   '47112233': { name: 'Novák & partneri s.r.o.', address: 'Mlynské nivy 5, 821 09 Bratislava', dic: '2023456789', icdph: 'SK2023456789' },
   '50987654': { name: 'Horská chata Tatry s.r.o.', address: 'Starý Smokovec 41, 062 01 Vysoké Tatry', dic: '2120987654', icdph: '' },
   '45678901': { name: 'Studio Pixel a.s.', address: 'Štúrova 18, 040 01 Košice', dic: '2022678901', icdph: 'SK2022678901' },
 };
+const REG_URL = '/.netlify/functions/register';
+const REG_SOURCE = 'Zdroj: Register právnických osôb, ŠÚ SR (CC BY 4.0)';
+async function regFetch(params) {
+  const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 12000);
+  try {
+    const r = await fetch(`${REG_URL}?${new URLSearchParams(params)}`, { signal: ctl.signal });
+    const j = await r.json().catch(() => ({}));
+    return { ok: r.ok, status: r.status, ...j };
+  } catch { return { ok: false, status: 0, error: 'Register je nedostupný, skontrolujte pripojenie' }; }
+  finally { clearTimeout(t); }
+}
+// Returns { ico, name, address, dic, icdph, register, registerText, type, source } or null.
 async function lookupIco(ico) {
   const k = String(ico || '').replace(/\D/g, '');
-  if (k.length !== 8) return null;
-  if (REGISTER[k]) return { ico: k, ...REGISTER[k], source: 'register' };
-  try {
-    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 4000);
-    const r = await fetch(`https://api.statistics.sk/rpo/v1/search?identifier=${k}`, { signal: ctl.signal });
-    clearTimeout(t);
-    if (!r.ok) return null;
-    const j = await r.json();
-    const e = j?.results?.[0];
-    if (!e) return null;
-    const name = e.fullNames?.[0]?.value || '';
-    const a = e.addresses?.[0] || {};
-    const address = [[a.street, a.buildingNumber || a.regNumber].filter(Boolean).join(' '), [a.postalCodes?.[0], a.municipality?.value].filter(Boolean).join(' ')].filter(Boolean).join(', ');
-    return name ? { ico: k, name, address, dic: '', icdph: '', source: 'rpo' } : null;
-  } catch { return null; }
+  if (k.length < 6 || k.length > 8) return null;
+  const key = k.padStart(8, '0');
+  if (REGISTER[key]) return { ico: key, ...REGISTER[key], source: 'demo' };
+  const j = await regFetch({ ico: key });
+  if (!j.ok || !j.result) { lookupIco.lastError = j.error || ''; return null; }
+  return { dic: '', icdph: '', ...j.result, source: 'rpo' };
+}
+// Search active companies and sole traders by name (or IČO). Returns { results, error }.
+async function searchRegister(q) {
+  q = String(q || '').trim();
+  if (q.length < 3) return { results: [] };
+  const local = Object.entries(REGISTER).filter(([ico, c]) => norm(c.name).includes(norm(q)) || ico.startsWith(q)).map(([ico, c]) => ({ ico, ...c, type: 'firma', source: 'demo' }));
+  const j = await regFetch({ q });
+  if (!j.ok) return { results: local, error: j.error || 'Register je dočasne nedostupný' };
+  const list = j.results || (j.result ? [j.result] : []);
+  return { results: [...local, ...list.map((x) => ({ dic: '', icdph: '', ...x, source: 'rpo' }))].slice(0, 10) };
 }
 
 /* ---------------- AI client with local fallbacks ---------------- */
@@ -572,7 +587,7 @@ function liveUser() {
 window.F = {
   $, $$, esc, uid, round2, eur, nf, pad, iso, today, parseD, addDays, addMonths, diffDays, fmtD, ym, MONTHS, MONTHS_FULL, ago, initials, norm, avatarBg, cap, plural,
   PLANS, FEATURES, VAT_RATES, STATUS, chip, getS, setS, save, reset, plan, has, quota, track, rollUsage,
-  totals, status, nextNumber, commitNumber, snap, ibanClean, ibanFmt, ibanValid, bankOf, lookupIco,
+  totals, status, nextNumber, commitNumber, snap, ibanClean, ibanFmt, ibanValid, bankOf, lookupIco, searchRegister, REG_SOURCE,
   ai, LOCAL, stats, taxCalc, TAXP, deadlines, notify, unread, engine, createInvoiceFromTemplate, ubl, download, qrSvg, seedDemo,
   adminData, saveAdmin, liveUser, store, KEY, ADMIN_KEY,
 };

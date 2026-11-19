@@ -85,4 +85,30 @@
     d.classList.toggle('open', open); b.setAttribute('aria-expanded', String(open));
   }));
   document.addEventListener('click', () => $$('.dd.open').forEach((d) => d.classList.remove('open')));
+
+  // Company search (public tool page)
+  const regForm = $('#regForm');
+  if (regForm) {
+    const out = $('#regOut');
+    const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const TYPE = { firma: 'firma', szco: 'živnostník', iny: 'iný subjekt' };
+    const card = (r) => `<div class="reg-card"><div class="reg-h"><b>${esc(r.name)}</b><span class="pill p-sent">${TYPE[r.type] || ''}</span></div>
+      <dl><dt>IČO</dt><dd>${esc(r.ico)}</dd><dt>Sídlo</dt><dd>${esc(r.address || '—')}</dd>${r.register ? `<dt>Register</dt><dd>${esc(r.registerText.replace('Zapísaný v registri: ', ''))}</dd>` : ''}${r.established ? `<dt>Vznik</dt><dd>${esc(r.established.split('-').reverse().join('. '))}</dd>` : ''}</dl>
+      <button type="button" class="btn btn-ghost btn-sm" data-copy="${esc(`${r.name}\n${r.address}\nIČO: ${r.ico}`)}">Kopírovať údaje</button></div>`;
+    const run = async (q) => {
+      out.innerHTML = '<p class="reg-msg"><span class="spinner"></span> Hľadám v registri…</p>';
+      try {
+        const r = await fetch(`/.netlify/functions/register?q=${encodeURIComponent(q)}`);
+        const j = await r.json();
+        if (!r.ok) { out.innerHTML = `<p class="reg-msg err">${esc(j.error || 'Vyhľadávanie zlyhalo')}</p>`; return; }
+        const list = j.results || (j.result ? [j.result] : []);
+        out.innerHTML = list.length ? `<p class="reg-msg">Nájdené: ${list.length}${j.total > list.length ? ` z ${j.total} (spresnite názov)` : ''}</p><div class="reg-grid">${list.map(card).join('')}</div>` : '<p class="reg-msg">Nič sa nenašlo. Skúste iný názov alebo presné IČO.</p>';
+      } catch { out.innerHTML = '<p class="reg-msg err">Register je dočasne nedostupný. Skúste to o chvíľu.</p>'; }
+    };
+    regForm.addEventListener('submit', (e) => { e.preventDefault(); const q = $('#regQ').value.trim(); if (q.length >= 3) run(q); });
+    out.addEventListener('click', async (e) => {
+      const b = e.target.closest('[data-copy]'); if (!b) return;
+      try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = 'Skopírované ✓'; } catch { b.textContent = 'Kopírovanie nie je dostupné'; }
+    });
+  }
 })();
